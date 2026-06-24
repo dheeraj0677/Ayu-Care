@@ -38,7 +38,7 @@ AyuCare is a modern, comprehensive digital healthcare platform that allows patie
 **Frontend:**
 - **Vanilla HTML5 & CSS3**: No heavy frameworks, ensuring fast load times.
 - **Custom CSS Design System**: A robust, token-based design system featuring glassmorphism, responsive grids, and modern healthcare aesthetics (Purple, Light Gray, Soft Green).
-- **Vanilla JavaScript**: Fetch API for backend communication.
+
 
 ## 🚀 Getting Started
 
@@ -108,7 +108,7 @@ Ayu-Care/
 - **RBAC (Role-Based Access Control)**: Middleware explicitly checks if a user is a `patient`, `doctor`, or `admin` before granting route access.
 - **Input Validation**: Request bodies are strictly validated before hitting the controllers.
 - **Audit Logging**: Important actions (Login, Update, Delete) are logged for administrative review.
-- **Sanitization**: MongoDB query sanitization prevents injection attacks.
+
 
 ## 📄 License
 
