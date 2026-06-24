@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | AyuCare Hospital</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-secondary">
+    <!-- Header -->
+    <header class="header bg-card" id="header">
+        <div class="header-inner">
+            <div class="flex items-center gap-4">
+                <a href="patient-dashboard.html" class="btn btn-icon btn-ghost">
+                    <span class="material-icons">arrow_back</span>
+                </a>
+                <a href="index.html" class="header-logo">
+                    <div class="logo-icon"><span class="material-icons">local_hospital</span></div>
+                    <span class="hidden sm:inline">AyuCare</span>
+                </a>
+            </div>
+            
+            <div class="header-actions">
+                <div class="header-user" id="userMenuBtn">
+                    <img src="https://ui-avatars.com/api/?name=User&background=6C4DF6&color=fff" alt="User" class="avatar avatar-sm" id="userAvatar">
+                    <span class="header-user-name hidden md:block" id="userName">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="margin-top: calc(var(--header-height) + var(--space-8)); margin-bottom: var(--space-12);">
+        <div id="toastContainer" class="toast-container"></div>
+        
+        <div class="page-header text-center">
+            <h1 class="page-title">Book an Appointment</h1>
+            <p class="page-subtitle">Select a department and doctor to schedule your visit.</p>
+        </div>
+
+        <div class="booking-layout">
+            <!-- Left Side: Selection Flow -->
+            <div class="flex flex-col gap-6">
+                
+                <!-- Step 1: Department -->
+                <div class="card" id="step1">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center gap-2">
+                            <span class="avatar avatar-sm bg-primary text-white">1</span> Select Department
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="deptLoader" class="flex justify-center py-4"><span class="spinner spinner-sm"></span></div>
+                        <div class="grid grid-2" id="departmentGrid" style="gap: var(--space-3);">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Doctor -->
+                <div class="card opacity-50 pointer-events-none transition-all" id="step2">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center gap-2">
+                            <span class="avatar avatar-sm bg-gray-400 text-white" id="step2Badge">2</span> Select Doctor
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="doctorGrid" class="flex flex-col gap-3">
+                            <p class="text-muted text-sm text-center py-4">Please select a department first.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Date & Time -->
+                <div class="card opacity-50 pointer-events-none transition-all" id="step3">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center gap-2">
+                            <span class="avatar avatar-sm bg-gray-400 text-white" id="step3Badge">3</span> Select Date & Time
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" id="appointmentDate" class="form-input" min="">
+                        </div>
+                        
+                        <div class="mt-4">
+                            <label class="form-label mb-2">Available Time Slots</label>
+                            <div id="slotsLoader" class="hidden justify-center py-4"><span class="spinner spinner-sm"></span></div>
+                            <div class="time-slots-grid" id="timeSlotsGrid">
+                                <p class="text-muted text-sm col-span-full">Select a date to view slots.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Details -->
+                <div class="card opacity-50 pointer-events-none transition-all" id="step4">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center gap-2">
+                            <span class="avatar avatar-sm bg-gray-400 text-white" id="step4Badge">4</span> Patient Details
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Reason for Visit <span class="required">*</span></label>
+                            <input type="text" id="visitReason" class="form-input" placeholder="e.g. Routine checkup, Headache" required>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="form-label">Symptoms (Optional)</label>
+                            <textarea id="visitSymptoms" class="form-textarea" placeholder="Briefly describe your symptoms..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Side: Summary Sticky -->
+            <div class="booking-summary card border-primary">
+                <div class="card-header bg-primary-50 rounded-t-xl -mt-6 -mx-6 mb-6 p-6 border-b border-primary-100">
+                    <h2 class="card-title text-primary">Appointment Summary</h2>
+                </div>
+                
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-start gap-3">
+                        <span class="material-icons text-muted">apartment</span>
+                        <div>
+                            <div class="text-xs text-muted font-semibold uppercase tracking-wider">Department</div>
+                            <div class="font-medium text-primary" id="summaryDept">Not selected</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <span class="material-icons text-muted">person</span>
+                        <div>
+                            <div class="text-xs text-muted font-semibold uppercase tracking-wider">Doctor</div>
+                            <div class="font-medium" id="summaryDoctor">Not selected</div>
+                            <div class="text-xs text-muted mt-1" id="summaryFee">Consultation Fee: --</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <span class="material-icons text-muted">event</span>
+                        <div>
+                            <div class="text-xs text-muted font-semibold uppercase tracking-wider">Date & Time</div>
+                            <div class="font-medium" id="summaryDateTime">Not selected</div>
+                        </div>
+                    </div>
+
+                    <div class="divider my-4"></div>
+                    
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="font-semibold text-lg">Total Amount</span>
+                        <span class="font-bold text-xl text-primary" id="summaryTotal">$0.00</span>
+                    </div>
+
+                    <button class="btn btn-primary btn-block btn-lg" id="confirmBookingBtn" disabled>
+                        Confirm Booking
+                    </button>
+                    <p class="text-xs text-center text-muted mt-2">Payment will be collected at the hospital.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/api.js"></script>
+    <script>
+        // State
+        const bookingState = {
+            department: null,
+            doctor: null,
+            date: null,
+            timeSlot: null,
+            fee: 0
+        };
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!AyuCareAPI.requireAuth('patient')) return;
+            
+            const user = AyuCareAPI.getUser();
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6C4DF6&color=fff`;
+
+            // Set min date to today
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('appointmentDate');
+            dateInput.min = today;
+            
+            // Load Departments
+            try {
+                const data = await AyuCareAPI.fetchDepartments();
+                const grid = document.getElementById('departmentGrid');
+                document.getElementById('deptLoader').classList.add('hidden');
+                
+                grid.innerHTML = data.departments.map(dept => `
+                    <div class="p-4 border border-light rounded-lg cursor-pointer hover:border-primary hover:bg-primary-50 transition-colors dept-card" data-id="${dept._id}" data-name="${dept.name}">
+                        <div class="font-semibold text-primary mb-1">${dept.name}</div>
+                        <div class="text-xs text-muted truncate">${dept.description}</div>
+                    </div>
+                `).join('');
+
+                // Dept Click Listeners
+                document.querySelectorAll('.dept-card').forEach(card => {
+                    card.addEventListener('click', () => selectDepartment(card));
+                });
+            } catch (err) {
+                AyuCareAPI.showToast('Failed to load departments.', 'error');
+            }
+
+            // Date Listener
+            dateInput.addEventListener('change', (e) => {
+                bookingState.date = e.target.value;
+                if (bookingState.date && bookingState.doctor) {
+                    fetchTimeSlots();
+                }
+            });
+
+            // Confirm Button
+            document.getElementById('confirmBookingBtn').addEventListener('click', submitBooking);
+        });
+
+        async function selectDepartment(cardEl) {
+            // UI Update
+            document.querySelectorAll('.dept-card').forEach(c => {
+                c.classList.remove('border-primary', 'bg-primary-50', 'ring-2', 'ring-primary-200');
+            });
+            cardEl.classList.add('border-primary', 'bg-primary-50', 'ring-2', 'ring-primary-200');
+            
+            // State Update
+            bookingState.department = cardEl.dataset.id;
+            document.getElementById('summaryDept').textContent = cardEl.dataset.name;
+            
+            // Reset downstream
+            resetDoctor();
+            resetDateTime();
+            
+            // Unlock Step 2
+            const step2 = document.getElementById('step2');
+            step2.classList.remove('opacity-50', 'pointer-events-none');
+            document.getElementById('step2Badge').classList.replace('bg-gray-400', 'bg-primary');
+            
+            // Load Doctors
+            const docGrid = document.getElementById('doctorGrid');
+            docGrid.innerHTML = '<div class="flex justify-center py-4"><span class="spinner spinner-sm"></span></div>';
+            
+            try {
+                const data = await AyuCareAPI.fetchDoctorsByDepartment(bookingState.department);
+                if (data.doctors.length === 0) {
+                    docGrid.innerHTML = '<p class="text-muted text-center py-4">No doctors available in this department currently.</p>';
+                    return;
+                }
+                
+                docGrid.innerHTML = data.doctors.map(doc => `
+                    <div class="flex items-center gap-4 p-4 border border-light rounded-lg cursor-pointer hover:border-primary transition-colors doc-card" 
+                         data-id="${doc._id}" data-name="Dr. ${doc.userId.name}" data-fee="${doc.consultationFee}">
+                        <img src="https://ui-avatars.com/api/?name=Dr+${doc.userId.name}&background=random&color=fff" class="avatar avatar-lg">
+                        <div class="flex-1">
+                            <div class="font-bold text-lg">Dr. ${doc.userId.name}</div>
+                            <div class="text-sm text-muted mb-2">${doc.specialization} • ${doc.experience} Yrs Exp</div>
+                            <div class="flex gap-2">
+                                <span class="badge badge-gray"><span class="material-icons text-warning text-xs">star</span> ${doc.rating}</span>
+                                <span class="badge badge-success-bg text-success-dark font-medium">$${doc.consultationFee} Fee</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Doc Click Listeners
+                document.querySelectorAll('.doc-card').forEach(card => {
+                    card.addEventListener('click', () => selectDoctor(card));
+                });
+            } catch (err) {
+                docGrid.innerHTML = '<p class="text-danger text-center py-4">Failed to load doctors.</p>';
+            }
+        }
+
+        function selectDoctor(cardEl) {
+            document.querySelectorAll('.doc-card').forEach(c => {
+                c.classList.remove('border-primary', 'bg-primary-50', 'ring-2', 'ring-primary-200');
+            });
+            cardEl.classList.add('border-primary', 'bg-primary-50', 'ring-2', 'ring-primary-200');
+            
+            bookingState.doctor = cardEl.dataset.id;
+            bookingState.fee = parseFloat(cardEl.dataset.fee);
+            
+            document.getElementById('summaryDoctor').textContent = cardEl.dataset.name;
+            document.getElementById('summaryFee').textContent = `Consultation Fee: $${bookingState.fee}`;
+            document.getElementById('summaryTotal').textContent = `$${bookingState.fee.toFixed(2)}`;
+            
+            resetDateTime();
+            
+            // Unlock Step 3
+            const step3 = document.getElementById('step3');
+            step3.classList.remove('opacity-50', 'pointer-events-none');
+            document.getElementById('step3Badge').classList.replace('bg-gray-400', 'bg-primary');
+            
+            if (bookingState.date) fetchTimeSlots();
+        }
+
+        async function fetchTimeSlots() {
+            const grid = document.getElementById('timeSlotsGrid');
+            const loader = document.getElementById('slotsLoader');
+            grid.classList.add('hidden');
+            loader.classList.remove('hidden');
+            
+            try {
+                const data = await AyuCareAPI.fetchDoctorSlots(bookingState.doctor, bookingState.date);
+                loader.classList.add('hidden');
+                grid.classList.remove('hidden');
+                
+                if (!data.slots || data.slots.length === 0) {
+                    grid.innerHTML = '<p class="text-muted text-sm col-span-full py-2">No slots generated for this date. Please try another date.</p>';
+                    return;
+                }
+
+                grid.innerHTML = data.slots.map(slot => {
+                    if (slot.isBooked) {
+                        return `<div class="time-slot booked" title="Already booked">${slot.startTime}</div>`;
+                    }
+                    return `<div class="time-slot slot-selectable" data-time="${slot.startTime}">${slot.startTime}</div>`;
+                }).join('');
+
+                // Slot Listeners
+                document.querySelectorAll('.slot-selectable').forEach(el => {
+                    el.addEventListener('click', () => selectSlot(el));
+                });
+            } catch (err) {
+                loader.classList.add('hidden');
+                grid.classList.remove('hidden');
+                grid.innerHTML = '<p class="text-danger text-sm col-span-full py-2">Failed to load slots.</p>';
+            }
+        }
+
+        function selectSlot(slotEl) {
+            document.querySelectorAll('.slot-selectable').forEach(el => el.classList.remove('selected'));
+            slotEl.classList.add('selected');
+            
+            bookingState.timeSlot = slotEl.dataset.time;
+            
+            const dateObj = new Date(bookingState.date);
+            const dateStr = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+            document.getElementById('summaryDateTime').textContent = `${dateStr} at ${bookingState.timeSlot}`;
+            
+            // Unlock Step 4
+            const step4 = document.getElementById('step4');
+            step4.classList.remove('opacity-50', 'pointer-events-none');
+            document.getElementById('step4Badge').classList.replace('bg-gray-400', 'bg-primary');
+            
+            checkValidity();
+        }
+
+        function resetDoctor() {
+            bookingState.doctor = null;
+            bookingState.fee = 0;
+            document.getElementById('summaryDoctor').textContent = 'Not selected';
+            document.getElementById('summaryFee').textContent = 'Consultation Fee: --';
+            document.getElementById('summaryTotal').textContent = '$0.00';
+            
+            const step3 = document.getElementById('step3');
+            step3.classList.add('opacity-50', 'pointer-events-none');
+            document.getElementById('step3Badge').classList.replace('bg-primary', 'bg-gray-400');
+            
+            checkValidity();
+        }
+
+        function resetDateTime() {
+            bookingState.timeSlot = null;
+            document.getElementById('summaryDateTime').textContent = 'Not selected';
+            document.querySelectorAll('.slot-selectable').forEach(el => el.classList.remove('selected'));
+            
+            const step4 = document.getElementById('step4');
+            step4.classList.add('opacity-50', 'pointer-events-none');
+            document.getElementById('step4Badge').classList.replace('bg-primary', 'bg-gray-400');
+            
+            checkValidity();
+        }
+
+        function checkValidity() {
+            const btn = document.getElementById('confirmBookingBtn');
+            const reason = document.getElementById('visitReason').value.trim();
+            
+            if (bookingState.department && bookingState.doctor && bookingState.date && bookingState.timeSlot) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        // Add listener to reason input to re-check validity if needed
+        document.getElementById('visitReason').addEventListener('input', checkValidity);
+
+        async function submitBooking() {
+            const reason = document.getElementById('visitReason').value.trim();
+            if (!reason) {
+                AyuCareAPI.showToast('Please provide a reason for the visit.', 'warning');
+                document.getElementById('visitReason').focus();
+                return;
+            }
+
+            const symptoms = document.getElementById('visitSymptoms').value.trim() || undefined;
+            
+            const payload = {
+                doctor: bookingState.doctor,
+                department: bookingState.department,
+                date: bookingState.date,
+                timeSlot: { startTime: bookingState.timeSlot },
+                reason,
+                symptoms
+            };
+
+            const btn = document.getElementById('confirmBookingBtn');
+            btn.innerHTML = '<span class="spinner spinner-sm"></span> Processing...';
+            btn.disabled = true;
+
+            try {
+                await AyuCareAPI.bookAppointment(payload);
+                AyuCareAPI.showToast('Appointment booked successfully!', 'success');
+                
+                // Show success modal or redirect
+                setTimeout(() => {
+                    window.location.href = 'patient-dashboard.html';
+                }, 2000);
+            } catch (err) {
+                AyuCareAPI.showToast(err.message || 'Failed to book appointment. Slot might be taken.', 'error');
+                btn.innerHTML = 'Confirm Booking';
+                btn.disabled = false;
+                // Refresh slots
+                fetchTimeSlots();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard | AyuCare Hospital</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-secondary">
+    <!-- Header -->
+    <header class="header bg-card" id="header">
+        <div class="header-inner">
+            <div class="flex items-center gap-4">
+                <button class="mobile-menu-btn block lg:hidden" id="sidebarToggle">
+                    <span class="material-icons">menu</span>
+                </button>
+                <a href="index.html" class="header-logo">
+                    <div class="logo-icon bg-success"><span class="material-icons">medical_services</span></div>
+                    <span class="hidden sm:inline">AyuCare Dr.</span>
+                </a>
+            </div>
+            
+            <div class="header-actions">
+                <div class="header-user" id="userMenuBtn">
+                    <img src="https://ui-avatars.com/api/?name=Doctor&background=4CAF50&color=fff" alt="Doctor" class="avatar avatar-sm" id="userAvatar">
+                    <span class="header-user-name hidden md:block" id="userName">Loading...</span>
+                    <span class="material-icons text-muted">arrow_drop_down</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <div class="sidebar-section-title">Main Menu</div>
+                <a href="doctor-dashboard.html" class="sidebar-link active">
+                    <span class="material-icons sidebar-icon">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Appointments page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">calendar_month</span>
+                    <span>My Appointments</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Patients page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">people</span>
+                    <span>My Patients</span>
+                </a>
+                
+                <div class="sidebar-section-title mt-4">Settings</div>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Profile page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">person</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="#" class="sidebar-link text-danger mt-auto" id="logoutBtn">
+                    <span class="material-icons sidebar-icon">logout</span>
+                    <span>Log Out</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div id="toastContainer" class="toast-container"></div>
+            
+            <div class="dashboard-header-block">
+                <div>
+                    <h1 class="dashboard-greeting">Welcome, Dr. <span id="greetingName">...</span> 🩺</h1>
+                    <p class="dashboard-date"><span class="material-icons text-sm">calendar_today</span> <span id="currentDate">Loading date...</span></p>
+                </div>
+            </div>
+
+            <!-- Loader -->
+            <div id="dashboardLoader" class="flex flex-col items-center justify-center py-12">
+                <div class="spinner spinner-lg mb-4"></div>
+                <p class="text-muted">Loading your schedule...</p>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardData" class="hidden">
+                <div class="grid grid-4 mb-8">
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon purple"><span class="material-icons">event</span></div>
+                        <div>
+                            <div class="stat-value" id="todayApptsStat">0</div>
+                            <div class="stat-label">Today's Appointments</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon blue"><span class="material-icons">people</span></div>
+                        <div>
+                            <div class="stat-value" id="totalPatientsStat">0</div>
+                            <div class="stat-label">Total Patients</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon green"><span class="material-icons">check_circle</span></div>
+                        <div>
+                            <div class="stat-value" id="completedApptsStat">0</div>
+                            <div class="stat-label">Completed This Month</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon orange"><span class="material-icons">star</span></div>
+                        <div>
+                            <div class="stat-value" id="ratingStat">0.0</div>
+                            <div class="stat-label">Patient Rating</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <!-- Today's Schedule -->
+                    <div class="card col-span-2 md:col-span-1">
+                        <div class="card-header">
+                            <h2 class="card-title">Today's Schedule</h2>
+                            <span class="badge badge-primary" id="todayCountBadge">0 left</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex flex-col gap-3" id="todayScheduleContainer">
+                                <!-- Populated by JS -->
+                                <div class="text-center py-8 text-muted">No more appointments today.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Schedule (Tomorrow onwards) -->
+                    <div class="card col-span-2 md:col-span-1">
+                        <div class="card-header">
+                            <h2 class="card-title">Upcoming Appointments</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="flex flex-col gap-3" id="upcomingScheduleContainer">
+                                <!-- Populated by JS -->
+                                <div class="text-center py-8 text-muted">No upcoming appointments.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!AyuCareAPI.requireAuth('doctor')) return;
+            AyuCareAPI.setupLogoutHandler('logoutBtn');
+            
+            const user = AyuCareAPI.getUser();
+            document.getElementById('userName').textContent = `Dr. ${user.name}`;
+            document.getElementById('greetingName').textContent = user.name;
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=4CAF50&color=fff`;
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+
+            try {
+                const data = await AyuCareAPI.fetchDoctorDashboard();
+                renderDashboard(data);
+                
+                document.getElementById('dashboardLoader').classList.add('hidden');
+                document.getElementById('dashboardData').classList.remove('hidden');
+            } catch (error) {
+                AyuCareAPI.showToast('Failed to load dashboard data.', 'error');
+                document.getElementById('dashboardLoader').innerHTML = '<p class="text-danger">Error loading dashboard.</p>';
+            }
+
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                });
+            }
+        });
+
+        function renderDashboard(data) {
+            // Stats
+            document.getElementById('todayApptsStat').textContent = data.todayAppointments?.length || 0;
+            document.getElementById('totalPatientsStat').textContent = data.totalUniquePatients || 0;
+            document.getElementById('ratingStat').textContent = data.doctorProfile?.rating || '0.0';
+            
+            let completed = 0;
+            if(data.monthlyStats) {
+                const compStat = data.monthlyStats.find(s => s._id === 'completed');
+                if(compStat) completed = compStat.count;
+            }
+            document.getElementById('completedApptsStat').textContent = completed;
+
+            document.getElementById('todayCountBadge').textContent = `${data.todayAppointments?.length || 0} Appts`;
+
+            // Today's Schedule
+            const todayContainer = document.getElementById('todayScheduleContainer');
+            if (data.todayAppointments && data.todayAppointments.length > 0) {
+                todayContainer.innerHTML = data.todayAppointments.map(appt => `
+                    <div class="flex items-center justify-between p-3 border border-light rounded-lg hover:border-primary transition-colors cursor-pointer" onclick="AyuCareAPI.showToast('Patient details view coming soon', 'info')">
+                        <div class="flex items-center gap-3">
+                            <div class="font-bold text-primary bg-primary-50 p-2 rounded">${appt.timeSlot.startTime}</div>
+                            <div>
+                                <div class="font-semibold">${appt.patient.name}</div>
+                                <div class="text-xs text-muted flex items-center gap-1"><span class="material-icons text-xs">info</span> ${appt.reason || 'General Consultation'}</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-icon btn-ghost btn-sm"><span class="material-icons">chevron_right</span></button>
+                    </div>
+                `).join('');
+            }
+
+            // Upcoming Schedule
+            const upcomingContainer = document.getElementById('upcomingScheduleContainer');
+            if (data.upcomingAppointments && data.upcomingAppointments.length > 0) {
+                upcomingContainer.innerHTML = data.upcomingAppointments.map(appt => {
+                    const d = new Date(appt.date);
+                    return `
+                    <div class="flex items-center gap-3 p-3 border-b border-light last:border-0">
+                        <div class="text-center min-w-[50px] bg-gray-50 rounded p-1">
+                            <div class="text-xs text-muted uppercase font-bold">${d.toLocaleDateString('en-US', {month: 'short'})}</div>
+                            <div class="text-lg font-bold leading-none">${d.getDate()}</div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-semibold">${appt.patient.name}</div>
+                            <div class="text-xs text-muted">${appt.timeSlot.startTime}</div>
+                        </div>
+                        <span class="badge badge-primary text-xs">Confirmed</span>
+                    </div>
+                `;
+                }).join('');
+            }
+        }
+    </script>
+</body>
+</html>

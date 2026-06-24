@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | AyuCare Hospital</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-page">
+        <div id="toastContainer" class="toast-container"></div>
+
+        <div class="auth-container animate-scale-in" style="max-width: 1100px;">
+            <div class="auth-image-side hidden lg:flex" style="background: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800') center/cover; padding: 0;">
+                <div style="background: linear-gradient(to right, rgba(108, 77, 246, 0.9), rgba(88, 53, 224, 0.8)); width: 100%; height: 100%; padding: var(--space-12); display: flex; flex-direction: column; justify-content: space-between;">
+                    <a href="index.html" class="header-logo" style="color: white;">
+                        <div class="logo-icon" style="background: white; color: var(--primary);"><span class="material-icons">local_hospital</span></div>
+                        <span style="-webkit-text-fill-color: white;">AyuCare</span>
+                    </a>
+                    
+                    <div class="auth-image-content">
+                        <h2 class="auth-image-title">Start your health journey with us</h2>
+                        <ul class="text-white opacity-90 mt-6 flex flex-col gap-4">
+                            <li class="flex items-center gap-3"><span class="material-icons bg-white text-primary rounded-full p-1 text-sm">check</span> Easy appointment booking</li>
+                            <li class="flex items-center gap-3"><span class="material-icons bg-white text-primary rounded-full p-1 text-sm">check</span> Secure digital health records</li>
+                            <li class="flex items-center gap-3"><span class="material-icons bg-white text-primary rounded-full p-1 text-sm">check</span> Access to top specialists</li>
+                            <li class="flex items-center gap-3"><span class="material-icons bg-white text-primary rounded-full p-1 text-sm">check</span> 24/7 online support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-form-side" style="padding: var(--space-10) var(--space-8);">
+                <div class="mb-6 lg:hidden">
+                    <a href="index.html" class="header-logo">
+                        <div class="logo-icon"><span class="material-icons">local_hospital</span></div>
+                        <span>AyuCare</span>
+                    </a>
+                </div>
+                
+                <div class="auth-header mb-6">
+                    <h1 class="auth-title" style="font-size: var(--fs-xl);">Create your account</h1>
+                    <p class="auth-subtitle text-sm">Join AyuCare to manage your health efficiently.</p>
+                </div>
+                
+                <form id="registerForm">
+                    <div class="grid grid-2" style="gap: var(--space-4);">
+                        <div class="form-group mb-0">
+                            <label for="name" class="form-label">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required minlength="2" maxlength="50">
+                        </div>
+                        
+                        <div class="form-group mb-0">
+                            <label for="email" class="form-label">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-2 mt-4" style="gap: var(--space-4);">
+                        <div class="form-group mb-0">
+                            <label for="phone" class="form-label">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+1 (555) 000-0000" required>
+                        </div>
+                        
+                        <div class="form-group mb-0">
+                            <label for="password" class="form-label">Password <span class="required">*</span></label>
+                            <div class="relative">
+                                <input type="password" id="password" name="password" class="form-input" placeholder="Min 6 chars" required minlength="6">
+                                <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary" id="togglePassword">
+                                    <span class="material-icons text-sm" id="toggleIcon">visibility_off</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-3 mt-4" style="gap: var(--space-4);">
+                        <div class="form-group mb-0">
+                            <label for="gender" class="form-label">Gender <span class="required">*</span></label>
+                            <select id="gender" name="gender" class="form-select" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mb-0">
+                            <label for="age" class="form-label">Age <span class="required">*</span></label>
+                            <input type="number" id="age" name="age" class="form-input" placeholder="e.g. 30" required min="0" max="120">
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label for="bloodGroup" class="form-label">Blood Group</label>
+                            <select id="bloodGroup" name="bloodGroup" class="form-select">
+                                <option value="" selected>Unknown</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-sm text-muted">
+                        <label class="flex items-start gap-2 cursor-pointer">
+                            <input type="checkbox" required class="mt-1">
+                            <span>I agree to AyuCare's <a href="#" class="text-primary hover:underline">Terms of Service</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a>.</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block btn-lg mt-6" id="registerBtn">
+                        Create Account
+                    </button>
+                </form>
+                
+                <div class="auth-footer mt-6">
+                    <p>Already have an account? <a href="login.html" class="font-semibold text-primary">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (AyuCareAPI.isAuthenticated()) {
+                AyuCareAPI.redirectBasedOnRole();
+            }
+
+            const registerForm = document.getElementById('registerForm');
+            const registerBtn = document.getElementById('registerBtn');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                toggleIcon.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+            });
+
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(registerForm);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Add default role
+                data.role = 'patient';
+                
+                // Convert age to number
+                if (data.age) data.age = parseInt(data.age, 10);
+                // Remove empty bloodGroup
+                if (!data.bloodGroup) delete data.bloodGroup;
+                
+                registerBtn.innerHTML = '<span class="spinner spinner-sm"></span> Creating Account...';
+                registerBtn.disabled = true;
+                
+                try {
+                    await AyuCareAPI.register(data);
+                    AyuCareAPI.showToast('Registration successful! Welcome to AyuCare.', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'patient-dashboard.html';
+                    }, 1500);
+                } catch (error) {
+                    AyuCareAPI.showToast(error.message || 'Registration failed. Please try again.', 'error');
+                    registerBtn.innerHTML = 'Create Account';
+                    registerBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+/* ===========================
+   AyuCare Main Stylesheet
+   =========================== */
+
+/* Import Design System */
+@import url('./variables.css');
+@import url('./base.css');
+@import url('./animations.css');
+@import url('./components.css');
+@import url('./layout.css');
+
+/* ===========================
+   Page Specific Styles
+   =========================== */
+
+/* --- Home / Landing Page --- */
+.hero-section {
+  position: relative;
+  padding: 120px 0 80px;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(108, 77, 246, 0.05) 100%);
+  overflow: hidden;
+}
+
+.hero-shape-1 {
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--primary-100) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.hero-shape-2 {
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--success-bg) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: var(--space-4);
+}
+
+.hero-content h1 span {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: var(--fs-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-8);
+  max-width: 540px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+}
+
+.hero-stats {
+  display: flex;
+  gap: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-light);
+}
+
+.stat-item .value {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.stat-item .label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.hero-image-wrapper {
+  position: relative;
+}
+
+.hero-image {
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  z-index: 1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero-badge {
+  position: absolute;
+  background: var(--bg-card);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  z-index: 2;
+  animation: float 5s ease-in-out infinite reverse;
+}
+
+.hero-badge-1 {
+  top: 10%;
+  left: -20px;
+}
+
+.hero-badge-2 {
+  bottom: 20%;
+  right: -20px;
+}
+
+/* Services */
+.service-card {
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+}
+
+.service-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-50);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-5);
+  font-size: 32px;
+  color: var(--primary);
+  transition: all var(--transition-base);
+}
+
+.service-card:hover .service-icon-wrapper {
+  background: var(--primary);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.service-title {
+  margin-bottom: var(--space-3);
+}
+
+/* How It Works */
+.step-card {
+  text-align: center;
+  position: relative;
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: var(--bg-primary);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--primary);
+  margin: 0 auto var(--space-4);
+  position: relative;
+  z-index: 1;
+}
+
+.step-card::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border-medium);
+  border-style: dashed;
+  z-index: 0;
+}
+
+.step-card:last-child::after {
+  display: none;
+}
+
+/* CTA Section */
+.cta-section {
+  background: var(--primary-gradient);
+  padding: var(--space-16) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--white);
+  position: relative;
+  z-index: 1;
+}
+
+.cta-title {
+  color: var(--white);
+  font-size: var(--fs-4xl);
+  margin-bottom: var(--space-4);
+}
+
+.cta-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-8);
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+/* --- Auth Pages (Login/Register) --- */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  padding: var(--space-6);
+  position: relative;
+}
+
+.auth-container {
+  max-width: 1000px;
+  width: 100%;
+  background: var(--bg-card);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  overflow: hidden;
+}
+
+.auth-image-side {
+  flex: 1;
+  background: var(--primary-gradient);
+  position: relative;
+  padding: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.auth-image-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>') center/cover;
+  opacity: 0.5;
+}
+
+.auth-image-content {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-image-title {
+  color: var(--white);
+  font-size: var(--fs-3xl);
+  margin-bottom: var(--space-4);
+}
+
+.auth-form-side {
+  flex: 1;
+  padding: var(--space-12) var(--space-10);
+  background: var(--bg-card);
+}
+
+.auth-header {
+  margin-bottom: var(--space-8);
+}
+
+.auth-title {
+  font-size: var(--fs-2xl);
+  margin-bottom: var(--space-2);
+}
+
+.auth-subtitle {
+  color: var(--text-muted);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: var(--space-6);
+  color: var(--text-secondary);
+}
+
+/* --- Dashboard Specific --- */
+.dashboard-header-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-8);
+}
+
+.dashboard-greeting {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-1);
+}
+
+.dashboard-date {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.upcoming-appointment-card {
+  background: var(--primary-gradient);
+  color: var(--white);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+  box-shadow: var(--shadow-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.upcoming-appointment-card::after {
+  content: '';
+  position: absolute;
+  right: -20%;
+  top: -50%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+}
+
+.upcoming-info h3 {
+  color: var(--white);
+  font-size: var(--fs-xl);
+  margin-bottom: var(--space-1);
+}
+
+.upcoming-info p {
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.upcoming-time {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(5px);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.upcoming-time .time {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  display: block;
+}
+
+.upcoming-time .date {
+  font-size: var(--fs-sm);
+  opacity: 0.9;
+}
+
+/* --- Doctor Search/List --- */
+.doctor-search-bar {
+  display: flex;
+  gap: var(--space-4);
+  background: var(--bg-card);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-8);
+}
+
+.doctor-search-bar .form-group {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.doctor-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.doctor-profile-card {
+  text-align: center;
+}
+
+.doctor-profile-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto var(--space-4);
+  border: 4px solid var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.doctor-profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin: var(--space-4) 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-light);
+}
+
+.doc-stat {
+  text-align: center;
+}
+
+.doc-stat-val {
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.doc-stat-val i {
+  color: var(--warning);
+}
+
+/* --- Booking Flow --- */
+.booking-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.booking-summary {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-8));
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.time-slot {
+  padding: var(--space-3);
+  text-align: center;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-weight: var(--fw-medium);
+}
+
+.time-slot:hover:not(.booked) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-50);
+}
+
+.time-slot.selected {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+}
+
+.time-slot.booked {
+  background: var(--gray-100);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  border-color: var(--gray-200);
+  text-decoration: line-through;
+}
+
+/* Responsive Overrides mapped in responsive.css */
+@import url('./responsive.css');

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | AyuCare Hospital</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-secondary">
+    <!-- Header -->
+    <header class="header bg-card" id="header">
+        <div class="header-inner">
+            <div class="flex items-center gap-4">
+                <button class="mobile-menu-btn block lg:hidden" id="sidebarToggle">
+                    <span class="material-icons">menu</span>
+                </button>
+                <a href="index.html" class="header-logo">
+                    <div class="logo-icon"><span class="material-icons">local_hospital</span></div>
+                    <span class="hidden sm:inline">AyuCare</span>
+                </a>
+            </div>
+            
+            <div class="header-actions">
+                <div class="relative">
+                    <button class="btn btn-icon btn-ghost" id="notificationBtn">
+                        <span class="material-icons">notifications_none</span>
+                        <span class="notification-badge hidden" id="notifBadge">0</span>
+                    </button>
+                </div>
+                
+                <div class="header-user" id="userMenuBtn">
+                    <img src="https://ui-avatars.com/api/?name=User&background=6C4DF6&color=fff" alt="User" class="avatar avatar-sm" id="userAvatar">
+                    <span class="header-user-name hidden md:block" id="userName">Loading...</span>
+                    <span class="material-icons text-muted">arrow_drop_down</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <div class="sidebar-section-title">Main Menu</div>
+                <a href="patient-dashboard.html" class="sidebar-link active">
+                    <span class="material-icons sidebar-icon">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="book-appointment.html" class="sidebar-link">
+                    <span class="material-icons sidebar-icon">event_available</span>
+                    <span>Book Appointment</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Appointments page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">calendar_month</span>
+                    <span>My Appointments</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Prescriptions page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">medication</span>
+                    <span>Prescriptions</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Health Records page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">medical_information</span>
+                    <span>Health Records</span>
+                </a>
+                
+                <div class="sidebar-section-title mt-4">Settings</div>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Profile page coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">person</span>
+                    <span>My Profile</span>
+                </a>
+                <a href="#" class="sidebar-link text-danger mt-auto" id="logoutBtn">
+                    <span class="material-icons sidebar-icon">logout</span>
+                    <span>Log Out</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div id="toastContainer" class="toast-container"></div>
+            
+            <div class="dashboard-header-block">
+                <div>
+                    <h1 class="dashboard-greeting">Hello, <span id="greetingName">...</span>! 👋</h1>
+                    <p class="dashboard-date"><span class="material-icons text-sm">calendar_today</span> <span id="currentDate">Loading date...</span></p>
+                </div>
+                <a href="book-appointment.html" class="btn btn-primary hidden sm:flex">
+                    <span class="material-icons">add</span> New Appointment
+                </a>
+            </div>
+
+            <!-- Loader -->
+            <div id="dashboardLoader" class="flex flex-col items-center justify-center py-12">
+                <div class="spinner spinner-lg mb-4"></div>
+                <p class="text-muted">Loading your dashboard...</p>
+            </div>
+
+            <!-- Dashboard Content (Hidden until loaded) -->
+            <div id="dashboardData" class="hidden">
+                <!-- Upcoming Appointment -->
+                <div id="upcomingAppointmentContainer">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="grid grid-3 mb-8">
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon purple"><span class="material-icons">event_note</span></div>
+                        <div>
+                            <div class="stat-value" id="totalAppointmentsStat">0</div>
+                            <div class="stat-label">Total Appointments</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon blue"><span class="material-icons">science</span></div>
+                        <div>
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Lab Reports</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon orange"><span class="material-icons">receipt_long</span></div>
+                        <div>
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Prescriptions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-3">
+                    <!-- Recent Appointments -->
+                    <div class="card col-span-2" style="grid-column: span 2;">
+                        <div class="card-header">
+                            <h2 class="card-title">Recent Appointments</h2>
+                            <a href="#" class="btn btn-ghost btn-sm">View All</a>
+                        </div>
+                        <div class="table-container">
+                            <table class="table" id="recentAppointmentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Doctor</th>
+                                        <th>Department</th>
+                                        <th>Date & Time</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                    <tr><td colspan="5" class="text-center py-4 text-muted">No recent appointments found.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Latest Vitals -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Latest Vitals</h2>
+                        </div>
+                        <div class="card-body" id="latestVitalsContainer">
+                            <!-- Populated by JS -->
+                            <div class="empty-state p-4">
+                                <span class="material-icons text-muted mb-2" style="font-size: 32px;">monitor_heart</span>
+                                <p class="text-sm text-muted">No vitals recorded yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Setup Auth
+            if (!AyuCareAPI.requireAuth('patient')) return;
+            AyuCareAPI.setupLogoutHandler('logoutBtn');
+            
+            // Setup Header Info
+            const user = AyuCareAPI.getUser();
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('greetingName').textContent = user.name.split(' ')[0];
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6C4DF6&color=fff`;
+            
+            // Set Date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+
+            // Fetch Dashboard Data
+            try {
+                const data = await AyuCareAPI.fetchPatientDashboard();
+                renderDashboard(data);
+                
+                document.getElementById('dashboardLoader').classList.add('hidden');
+                document.getElementById('dashboardData').classList.remove('hidden');
+            } catch (error) {
+                AyuCareAPI.showToast('Failed to load dashboard data. Please refresh.', 'error');
+                document.getElementById('dashboardLoader').innerHTML = `
+                    <div class="text-danger flex flex-col items-center">
+                        <span class="material-icons text-4xl mb-2">error_outline</span>
+                        <p>Error loading dashboard. Please try again later.</p>
+                    </div>
+                `;
+            }
+
+            // Mobile Sidebar Toggle
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                });
+            }
+        });
+
+        function renderDashboard(data) {
+            // Update Stats
+            document.getElementById('totalAppointmentsStat').textContent = data.totalAppointments || 0;
+            
+            // Update Unread Notifications
+            if (data.unreadNotifications && data.unreadNotifications.length > 0) {
+                const badge = document.getElementById('notifBadge');
+                badge.textContent = data.unreadNotifications.length;
+                badge.classList.remove('hidden');
+            }
+
+            // Render Upcoming Appointment
+            const upcomingContainer = document.getElementById('upcomingAppointmentContainer');
+            if (data.upcomingAppointments && data.upcomingAppointments.length > 0) {
+                const nextAppt = data.upcomingAppointments[0];
+                const dateObj = new Date(nextAppt.date);
+                
+                upcomingContainer.innerHTML = `
+                    <div class="upcoming-appointment-card">
+                        <div class="upcoming-info z-10 relative">
+                            <div class="badge bg-white text-primary mb-3 text-xs font-bold px-2 py-1 rounded">UPCOMING APPOINTMENT</div>
+                            <h3>Dr. ${nextAppt.doctor.userId.name}</h3>
+                            <p>${nextAppt.department.name} Consultation</p>
+                        </div>
+                        <div class="upcoming-time z-10 relative hidden sm:block">
+                            <span class="time">${nextAppt.timeSlot.startTime}</span>
+                            <span class="date">${dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Render Recent Appointments Table
+            const tbody = document.querySelector('#recentAppointmentsTable tbody');
+            if (data.recentAppointments && data.recentAppointments.length > 0) {
+                tbody.innerHTML = data.recentAppointments.map(appt => {
+                    const dateObj = new Date(appt.date);
+                    const statusClass = {
+                        'pending': 'warning',
+                        'confirmed': 'primary',
+                        'completed': 'success',
+                        'cancelled': 'danger',
+                        'no-show': 'gray'
+                    }[appt.status];
+                    
+                    return `
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-3">
+                                    <div class="avatar avatar-sm bg-primary-100 text-primary">
+                                        <span class="material-icons text-sm">person</span>
+                                    </div>
+                                    <span class="font-medium">Dr. ${appt.doctor.userId.name}</span>
+                                </div>
+                            </td>
+                            <td>${appt.department.name}</td>
+                            <td>
+                                <div>${dateObj.toLocaleDateString()}</div>
+                                <div class="text-xs text-muted">${appt.timeSlot.startTime}</div>
+                            </td>
+                            <td><span class="badge badge-${statusClass}"><span class="badge-dot"></span> ${appt.status.charAt(0).toUpperCase() + appt.status.slice(1)}</span></td>
+                            <td>
+                                <button class="btn btn-icon btn-ghost btn-sm" onclick="AyuCareAPI.showToast('Details coming soon', 'info')">
+                                    <span class="material-icons text-sm">visibility</span>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Render Vitals
+            const vitalsContainer = document.getElementById('latestVitalsContainer');
+            if (data.latestVitals) {
+                const v = data.latestVitals;
+                vitalsContainer.innerHTML = `
+                    <div class="flex flex-col gap-4">
+                        ${v.heartRate ? `
+                        <div class="flex justify-between items-center pb-2 border-b border-light">
+                            <div class="flex items-center gap-2 text-muted">
+                                <span class="material-icons text-danger text-sm">favorite</span> Heart Rate
+                            </div>
+                            <div class="font-semibold">${v.heartRate.value} <span class="text-xs text-muted">${v.heartRate.unit}</span></div>
+                        </div>` : ''}
+                        
+                        ${v.bloodPressure ? `
+                        <div class="flex justify-between items-center pb-2 border-b border-light">
+                            <div class="flex items-center gap-2 text-muted">
+                                <span class="material-icons text-primary text-sm">bloodtype</span> Blood Pressure
+                            </div>
+                            <div class="font-semibold">${v.bloodPressure.systolic}/${v.bloodPressure.diastolic} <span class="text-xs text-muted">${v.bloodPressure.unit}</span></div>
+                        </div>` : ''}
+                        
+                        ${v.bodyWeight ? `
+                        <div class="flex justify-between items-center pb-2 border-b border-light">
+                            <div class="flex items-center gap-2 text-muted">
+                                <span class="material-icons text-success text-sm">monitor_weight</span> Weight
+                            </div>
+                            <div class="font-semibold">${v.bodyWeight.value} <span class="text-xs text-muted">${v.bodyWeight.unit}</span></div>
+                        </div>` : ''}
+                        
+                        <div class="text-xs text-right text-muted mt-2">
+                            Recorded on ${new Date(v.recordDate).toLocaleDateString()}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

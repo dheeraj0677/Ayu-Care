@@ -1,0 +1,158 @@
+/* ===========================
+   AyuCare Design Tokens
+   =========================== */
+:root {
+  /* Primary Colors */
+  --primary: #6C4DF6;
+  --primary-light: #8B6FF8;
+  --primary-dark: #5835E0;
+  --primary-50: rgba(108, 77, 246, 0.05);
+  --primary-100: rgba(108, 77, 246, 0.1);
+  --primary-200: rgba(108, 77, 246, 0.2);
+  --primary-gradient: linear-gradient(135deg, #6C4DF6 0%, #8B6FF8 50%, #A78BFA 100%);
+  --primary-gradient-hover: linear-gradient(135deg, #5835E0 0%, #6C4DF6 50%, #8B6FF8 100%);
+
+  /* Accent / Success */
+  --success: #4CAF50;
+  --success-light: #66BB6A;
+  --success-dark: #388E3C;
+  --success-bg: rgba(76, 175, 80, 0.1);
+
+  /* Neutrals */
+  --white: #FFFFFF;
+  --gray-50: #F9FAFB;
+  --gray-100: #F5F6FA;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+
+  /* Semantic Colors */
+  --info: #2196F3;
+  --info-bg: rgba(33, 150, 243, 0.1);
+  --warning: #FF9800;
+  --warning-bg: rgba(255, 152, 0, 0.1);
+  --danger: #EF4444;
+  --danger-bg: rgba(239, 68, 68, 0.1);
+
+  /* Text */
+  --text-primary: #1a1a2e;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --text-light: #D1D5DB;
+  --text-inverse: #FFFFFF;
+
+  /* Background */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F6FA;
+  --bg-tertiary: #F0F1F5;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FAFBFC;
+
+  /* Borders */
+  --border-light: #E5E7EB;
+  --border-medium: #D1D5DB;
+  --border-focus: #6C4DF6;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --shadow-primary: 0 4px 14px rgba(108, 77, 246, 0.25);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 8px 24px rgba(108, 77, 246, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  --fs-xs: 0.75rem;     /* 12px */
+  --fs-sm: 0.8125rem;   /* 13px */
+  --fs-base: 0.875rem;  /* 14px */
+  --fs-md: 1rem;        /* 16px */
+  --fs-lg: 1.125rem;    /* 18px */
+  --fs-xl: 1.25rem;     /* 20px */
+  --fs-2xl: 1.5rem;     /* 24px */
+  --fs-3xl: 1.875rem;   /* 30px */
+  --fs-4xl: 2.25rem;    /* 36px */
+  --fs-5xl: 3rem;       /* 48px */
+  --fs-6xl: 3.75rem;    /* 60px */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --lh-tight: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.75;
+
+  /* Spacing */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+  --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-indexes */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-tooltip: 1060;
+  --z-toast: 1070;
+
+  /* Layout */
+  --header-height: 72px;
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 72px;
+  --max-width: 1280px;
+  --content-width: 1200px;
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --bg-primary: #111827;
+  --bg-secondary: #1F2937;
+  --bg-tertiary: #374151;
+  --bg-card: #1F2937;
+  --bg-sidebar: #111827;
+  --border-light: #374151;
+  --border-medium: #4B5563;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 8px 24px rgba(108, 77, 246, 0.2);
+  --gray-100: #1F2937;
+  --gray-200: #374151;
+}

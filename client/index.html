@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AyuCare Hospital | Advanced Healthcare Management</title>
+    <meta name="description" content="AyuCare Hospital provides world-class medical facilities, expert doctors, and seamless online appointment booking.">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+    
+    <!-- Icons (FontAwesome alternative or basic unicode for now) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="header-logo">
+                <div class="logo-icon"><span class="material-icons">local_hospital</span></div>
+                <span>AyuCare</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#departments" class="nav-link">Departments</a>
+                <a href="#doctors" class="nav-link">Find a Doctor</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="login.html" class="btn btn-ghost">Log In</a>
+                <a href="register.html" class="btn btn-primary">Book Appointment</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <div class="hamburger"></div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section" id="home">
+            <div class="hero-shape-1"></div>
+            <div class="hero-shape-2"></div>
+            <div class="container hero-container">
+                <div class="hero-content animate-fade-in-up">
+                    <div class="badge badge-primary mb-6"><span class="badge-dot"></span> 24/7 Emergency Service</div>
+                    <h1>Healthcare that <span>Cares</span> for You and Your Family</h1>
+                    <p class="hero-subtitle">Book appointments, consult with top doctors, and manage your health records seamlessly with AyuCare's digital platform.</p>
+                    <div class="hero-actions">
+                        <a href="register.html" class="btn btn-primary btn-xl">Find a Doctor</a>
+                        <a href="#departments" class="btn btn-secondary btn-xl">Explore Services</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="value">50+</div>
+                            <div class="label">Expert Doctors</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value">10k+</div>
+                            <div class="label">Happy Patients</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value">15+</div>
+                            <div class="label">Specialties</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper animate-fade-in-left">
+                    <img src="https://images.unsplash.com/photo-1638202993928-7267aad84c31?auto=format&fit=crop&q=80&w=800" alt="Doctor with patient" class="hero-image">
+                    <div class="hero-badge hero-badge-1">
+                        <div class="avatar bg-success text-white"><span class="material-icons">verified</span></div>
+                        <div>
+                            <div class="text-sm font-bold">Top Rated</div>
+                            <div class="text-xs text-muted">Hospital 2026</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features/How it works -->
+        <section class="section bg-primary">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">How It Works</div>
+                    <h2 class="section-title">Your Health Journey in 3 Easy Steps</h2>
+                    <p class="section-subtitle">Experience seamless healthcare management from booking to recovery.</p>
+                </div>
+                <div class="grid grid-3">
+                    <div class="step-card hover-lift card card-flush p-8">
+                        <div class="step-number">1</div>
+                        <h3>Find a Specialist</h3>
+                        <p>Search for doctors by department, specialty, or condition and view their verified profiles and patient reviews.</p>
+                    </div>
+                    <div class="step-card hover-lift card card-flush p-8">
+                        <div class="step-number">2</div>
+                        <h3>Book Appointment</h3>
+                        <p>Select an available time slot that works for you and securely book your consultation online in seconds.</p>
+                    </div>
+                    <div class="step-card hover-lift card card-flush p-8">
+                        <div class="step-number">3</div>
+                        <h3>Get Quality Care</h3>
+                        <p>Visit the doctor, receive your digital prescription, and access your medical records securely anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Departments Preview -->
+        <section class="section" id="departments">
+            <div class="container">
+                <div class="flex justify-between items-end mb-12">
+                    <div>
+                        <div class="section-badge">Our Specialties</div>
+                        <h2 class="section-title mb-0">Centers of Excellence</h2>
+                    </div>
+                    <a href="register.html" class="btn btn-ghost hidden md:flex">View All Departments <span class="material-icons">arrow_forward</span></a>
+                </div>
+                <div class="grid grid-4" id="departmentPreviewList">
+                    <!-- Departments will be injected here via JS, showing placeholders for now -->
+                    <div class="card hover-lift service-card">
+                        <div class="service-icon-wrapper"><span class="material-icons">favorite</span></div>
+                        <h3 class="service-title">Cardiology</h3>
+                        <p class="text-sm">Expert heart care and surgery.</p>
+                    </div>
+                    <div class="card hover-lift service-card">
+                        <div class="service-icon-wrapper"><span class="material-icons">psychology</span></div>
+                        <h3 class="service-title">Neurology</h3>
+                        <p class="text-sm">Advanced brain and nerve treatments.</p>
+                    </div>
+                    <div class="card hover-lift service-card">
+                        <div class="service-icon-wrapper"><span class="material-icons">child_care</span></div>
+                        <h3 class="service-title">Pediatrics</h3>
+                        <p class="text-sm">Specialized care for children.</p>
+                    </div>
+                    <div class="card hover-lift service-card">
+                        <div class="service-icon-wrapper"><span class="material-icons">bone</span></div>
+                        <h3 class="service-title">Orthopedics</h3>
+                        <p class="text-sm">Bone, joint, and muscle care.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <h2 class="cta-title">Ready to take control of your health?</h2>
+                <p class="cta-subtitle">Join thousands of patients who trust AyuCare for their healthcare needs. Create an account today and book your first appointment.</p>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn btn-secondary btn-xl">Create Account</a>
+                    <a href="login.html" class="btn btn-primary btn-xl" style="background: rgba(255,255,255,0.2); border-color: transparent;">Sign In</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="header-logo mb-4">
+                        <div class="logo-icon" style="background: white; color: var(--primary);"><span class="material-icons">local_hospital</span></div>
+                        <span style="-webkit-text-fill-color: white;">AyuCare</span>
+                    </a>
+                    <p>Providing world-class medical facilities, expert doctors, and seamless online healthcare management for you and your family.</p>
+                    <div class="footer-social mt-6">
+                        <a href="#"><span class="material-icons">facebook</span></a>
+                        <a href="#"><span class="material-icons">twitter</span></a>
+                        <a href="#"><span class="material-icons">instagram</span></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Home</a>
+                        <a href="#about" class="footer-link">About Us</a>
+                        <a href="#departments" class="footer-link">Departments</a>
+                        <a href="#doctors" class="footer-link">Find a Doctor</a>
+                        <a href="login.html" class="footer-link">Patient Portal</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Legal</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">Patient Rights</a>
+                        <a href="#" class="footer-link">Cookie Policy</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <div class="footer-contact-item">
+                        <span class="material-icons icon">location_on</span>
+                        <span>123 Health Avenue, Medical District, NY 10001</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="material-icons icon">email</span>
+                        <span>contact@ayucare.com</span>
+                    </div>
+                    
+                    <div class="emergency-card">
+                        <div class="emergency-title">24/7 Emergency</div>
+                        <div class="emergency-number">+1-800-AYUCARE</div>
+                        <div class="emergency-note">Call immediately for medical emergencies</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 AyuCare Hospital. All rights reserved.</div>
+                <div>Designed with care for a healthier tomorrow.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

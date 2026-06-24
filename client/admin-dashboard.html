@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | AyuCare Hospital</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="bg-secondary">
+    <!-- Header -->
+    <header class="header bg-card" id="header">
+        <div class="header-inner">
+            <div class="flex items-center gap-4">
+                <button class="mobile-menu-btn block lg:hidden" id="sidebarToggle">
+                    <span class="material-icons">menu</span>
+                </button>
+                <a href="index.html" class="header-logo">
+                    <div class="logo-icon bg-warning text-white"><span class="material-icons">admin_panel_settings</span></div>
+                    <span class="hidden sm:inline">AyuCare Admin</span>
+                </a>
+            </div>
+            
+            <div class="header-actions">
+                <div class="header-user" id="userMenuBtn">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=FF9800&color=fff" alt="Admin" class="avatar avatar-sm" id="userAvatar">
+                    <span class="header-user-name hidden md:block" id="userName">Loading...</span>
+                    <span class="material-icons text-muted">arrow_drop_down</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar-nav">
+                <div class="sidebar-section-title">Overview</div>
+                <a href="admin-dashboard.html" class="sidebar-link active">
+                    <span class="material-icons sidebar-icon">analytics</span>
+                    <span>Analytics</span>
+                </a>
+                
+                <div class="sidebar-section-title mt-4">Management</div>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('User Management coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">manage_accounts</span>
+                    <span>Users & Staff</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Department Management coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">apartment</span>
+                    <span>Departments</span>
+                </a>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Financial Reports coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">payments</span>
+                    <span>Finances</span>
+                </a>
+                
+                <div class="sidebar-section-title mt-4">System</div>
+                <a href="#" class="sidebar-link" onclick="AyuCareAPI.showToast('Audit Logs coming soon', 'info')">
+                    <span class="material-icons sidebar-icon">history</span>
+                    <span>Audit Logs</span>
+                </a>
+                <a href="#" class="sidebar-link text-danger mt-auto" id="logoutBtn">
+                    <span class="material-icons sidebar-icon">logout</span>
+                    <span>Log Out</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <div id="toastContainer" class="toast-container"></div>
+            
+            <div class="dashboard-header-block mb-6">
+                <div>
+                    <h1 class="dashboard-greeting">System Overview 📊</h1>
+                    <p class="text-muted">Hospital analytics and key performance indicators.</p>
+                </div>
+            </div>
+
+            <!-- Loader -->
+            <div id="dashboardLoader" class="flex flex-col items-center justify-center py-12">
+                <div class="spinner spinner-lg mb-4"></div>
+                <p class="text-muted">Aggregating hospital data...</p>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardData" class="hidden">
+                <!-- Overview Stats -->
+                <div class="grid grid-4 mb-8">
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon purple"><span class="material-icons">groups</span></div>
+                        <div>
+                            <div class="stat-value" id="totalPatientsStat">0</div>
+                            <div class="stat-label">Total Patients</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon green"><span class="material-icons">medical_services</span></div>
+                        <div>
+                            <div class="stat-value" id="totalDoctorsStat">0</div>
+                            <div class="stat-label">Active Doctors</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon blue"><span class="material-icons">event</span></div>
+                        <div>
+                            <div class="stat-value" id="totalApptsStat">0</div>
+                            <div class="stat-label">Total Appointments</div>
+                        </div>
+                    </div>
+                    <div class="stat-card hover-lift">
+                        <div class="stat-icon orange"><span class="material-icons">attach_money</span></div>
+                        <div>
+                            <div class="stat-value" id="totalRevenueStat">$0</div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <!-- Department Stats -->
+                    <div class="card col-span-2 md:col-span-1">
+                        <div class="card-header">
+                            <h2 class="card-title">Department Performance</h2>
+                        </div>
+                        <div class="table-container">
+                            <table class="table" id="departmentTable">
+                                <thead>
+                                    <tr>
+                                        <th>Department</th>
+                                        <th>Appts</th>
+                                        <th>Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Trend (Simplified placeholder) -->
+                    <div class="card col-span-2 md:col-span-1">
+                        <div class="card-header">
+                            <h2 class="card-title">Weekly Appointments Trend</h2>
+                        </div>
+                        <div class="card-body flex flex-col justify-center items-center h-full min-h-[250px]">
+                            <div class="w-full flex items-end justify-between px-4 h-48 border-b border-light pb-2 gap-2" id="chartContainer">
+                                <!-- Bars populated by JS -->
+                            </div>
+                            <div class="w-full flex justify-between px-4 mt-2 text-xs text-muted" id="chartLabels">
+                                <!-- Labels populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!AyuCareAPI.requireAuth('admin')) return;
+            AyuCareAPI.setupLogoutHandler('logoutBtn');
+            
+            const user = AyuCareAPI.getUser();
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=FF9800&color=fff`;
+
+            try {
+                const data = await AyuCareAPI.fetchAdminDashboard();
+                renderDashboard(data);
+                
+                document.getElementById('dashboardLoader').classList.add('hidden');
+                document.getElementById('dashboardData').classList.remove('hidden');
+            } catch (error) {
+                AyuCareAPI.showToast('Failed to load admin dashboard.', 'error');
+                document.getElementById('dashboardLoader').innerHTML = '<p class="text-danger">Error loading dashboard.</p>';
+            }
+
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                });
+            }
+        });
+
+        function renderDashboard(data) {
+            const overview = data.overview || {};
+            document.getElementById('totalPatientsStat').textContent = overview.totalPatients || 0;
+            document.getElementById('totalDoctorsStat').textContent = overview.totalDoctors || 0;
+            document.getElementById('totalApptsStat').textContent = overview.total || 0;
+            document.getElementById('totalRevenueStat').textContent = `$${overview.totalRevenue || 0}`;
+
+            // Department Table
+            const deptTbody = document.querySelector('#departmentTable tbody');
+            if (data.departmentStats && data.departmentStats.length > 0) {
+                deptTbody.innerHTML = data.departmentStats.slice(0, 5).map(dept => `
+                    <tr>
+                        <td class="font-medium">${dept.departmentName}</td>
+                        <td>${dept.totalAppointments}</td>
+                        <td class="text-success">$${dept.revenue}</td>
+                    </tr>
+                `).join('');
+            } else {
+                deptTbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No data available</td></tr>';
+            }
+
+            // Simple CSS Chart for Weekly Report
+            if (data.weeklyReport && data.weeklyReport.dailyStats) {
+                const stats = data.weeklyReport.dailyStats;
+                const maxCount = Math.max(...stats.map(s => s.count), 1);
+                
+                const chartContainer = document.getElementById('chartContainer');
+                const chartLabels = document.getElementById('chartLabels');
+                
+                chartContainer.innerHTML = stats.map(s => {
+                    const heightPct = (s.count / maxCount) * 100;
+                    return `
+                        <div class="flex flex-col items-center flex-1 group">
+                            <div class="text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity mb-1">${s.count}</div>
+                            <div class="w-full bg-primary-200 rounded-t-sm relative hover:bg-primary transition-colors cursor-pointer" style="height: ${heightPct}%"></div>
+                        </div>
+                    `;
+                }).join('');
+
+                chartLabels.innerHTML = stats.map(s => {
+                    const date = new Date(s._id);
+                    return `<div class="text-center flex-1">${date.toLocaleDateString('en-US', {weekday: 'short'})}</div>`;
+                }).join('');
+            }
+        }
+    </script>
+</body>
+</html>
