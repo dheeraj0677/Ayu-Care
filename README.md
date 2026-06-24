@@ -108,7 +108,7 @@ Ayu-Care/
 - **RBAC (Role-Based Access Control)**: Middleware explicitly checks if a user is a `patient`, `doctor`, or `admin` before granting route access.
 - **Input Validation**: Request bodies are strictly validated before hitting the controllers.
 - **Audit Logging**: Important actions (Login, Update, Delete) are logged for administrative review.
-- **Sanitization**: MongoDB query sanitization prevents injection attacks.
+
 
 ## 📄 License
 
