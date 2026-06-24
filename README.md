@@ -38,7 +38,7 @@ AyuCare is a modern, comprehensive digital healthcare platform that allows patie
 **Frontend:**
 - **Vanilla HTML5 & CSS3**: No heavy frameworks, ensuring fast load times.
 - **Custom CSS Design System**: A robust, token-based design system featuring glassmorphism, responsive grids, and modern healthcare aesthetics (Purple, Light Gray, Soft Green).
-- **Vanilla JavaScript**: Fetch API for backend communication.
+
 
 ## 🚀 Getting Started
 
