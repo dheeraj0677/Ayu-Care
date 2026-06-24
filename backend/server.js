@@ -64,8 +64,8 @@ if (process.env.NODE_ENV === 'development') {
 // Rate limiting
 app.use('/api/', generalLimiter);
 
-// Static files — serve client folder
-app.use(express.static(path.join(__dirname, 'client')));
+// Serve static files from the frontend directory
+app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Health check
@@ -93,15 +93,15 @@ app.use('/api/audit-logs', auditLogRoutes);
 
 // Serve frontend pages — SPA-style fallback
 app.get('*.html', (req, res) => {
-  const requestedPage = path.join(__dirname, 'client', req.path);
+  const requestedPage = path.join(__dirname, '../frontend', req.path);
   if (fs.existsSync(requestedPage)) {
     return res.sendFile(requestedPage);
   }
-  return res.sendFile(path.join(__dirname, 'client', 'index.html'));
+  return res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
 // Error handling
